@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "streamd"
+abstract: "A CLI tool that renders streamed LLM output as beautiful markdown in the terminal."
+authors:
+  - family-names: "Gosain"
+    given-names: "Gaurav"
+    email: "itsgauravgosain@gmail.com"
+repository-code: "https://github.com/Gaurav-Gosain/streamd"
+license: MIT
+keywords:
+  - cli
+  - terminal
+  - markdown
+  - llm
+  - streaming
+  - golang
+  - tui
