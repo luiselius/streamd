@@ -82,6 +82,9 @@ type universalChunk struct {
 	// Ollama /api/generate
 	Response string `json:"response"`
 
+	// Ollama thinking/reasoning (e.g. qwen3)
+	Thinking string `json:"thinking"`
+
 	// Ollama flags & metadata
 	Done            bool   `json:"done"`
 	DoneReason      string `json:"done_reason"`
@@ -182,8 +185,8 @@ func parseJSON(data string) sseEvent {
 	}
 
 	// Ollama /api/chat
-	if c.Message.Content != "" {
-		ev := sseEvent{Content: c.Message.Content, Done: c.Done}
+	if c.Message.Content != "" || c.Thinking != "" {
+		ev := sseEvent{Content: c.Message.Content, ReasoningContent: c.Thinking, Done: c.Done}
 		if c.Done {
 			ev.Meta = buildMetaFromOllama(&c)
 		}
@@ -191,8 +194,8 @@ func parseJSON(data string) sseEvent {
 	}
 
 	// Ollama /api/generate
-	if c.Response != "" {
-		ev := sseEvent{Content: c.Response, Done: c.Done}
+	if c.Response != "" || c.Thinking != "" {
+		ev := sseEvent{Content: c.Response, ReasoningContent: c.Thinking, Done: c.Done}
 		if c.Done {
 			ev.Meta = buildMetaFromOllama(&c)
 		}

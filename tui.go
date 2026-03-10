@@ -236,6 +236,7 @@ type inlineModel struct {
 	inThink    bool
 	showThink  bool
 	quitting   bool
+	dirty      bool
 	styleName  string
 	width      int
 	height     int
@@ -277,27 +278,35 @@ func (m inlineModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		if msg.Done {
 			m.done = true
+			m.dirty = true
 			return m, nil
 		}
 		if msg.ReasoningContent != "" {
 			m.thinking += msg.ReasoningContent
+			m.dirty = true
 		}
 		if msg.Content != "" {
 			td, cd, next := parseContent(msg.Content, m.inThink)
 			m.thinking += td
 			m.content += cd
 			m.inThink = next
+			m.dirty = true
 		}
 		return m, waitForSSE(m.events)
 
 	case tickMsg:
 		target := len(m.content)
+		advanced := false
 		if m.displayPos < target {
 			if m.done {
 				m.displayPos = target
 			} else {
 				m.displayPos = nextWordBoundary(m.content, m.displayPos)
 			}
+			advanced = true
+		}
+		if m.dirty || advanced {
+			m.dirty = false
 			md := buildMd(m.thinking, m.content[:m.displayPos], m.showThink)
 			if md != "" {
 				out, err := m.renderer.Render(md)
